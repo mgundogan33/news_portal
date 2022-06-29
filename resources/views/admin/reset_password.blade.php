@@ -14,7 +14,6 @@
     @include('admin.layout.styles')
 
     @include('admin.layout.scripts')
-
 </head>
 
 <body>
@@ -27,44 +26,35 @@
                             class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
                             <div class="card card-primary border-box">
                                 <div class="card-header card-header-auth">
-                                    <h4 class="text-center">Admin Panel Giriş</h4>
+                                    <h4 class="text-center">Şifremi Yenile</h4>
                                 </div>
                                 <div class="card-body card-body-auth">
-                                    @if (session()->get('success'))
-                                        <div class="text-success">{{ session()->get('success') }}</div>
-                                    @endif
-                                    <form method="POST" action="{{ route('admin_login_submit') }}">
+                                    <form method="POST" action="{{ route('admin.reset_password_submit') }}">
                                         @csrf
-                                        <div class="form-group">
-                                            <input type="text"
-                                                class="form-control @error('email') is-invalid @enderror" name="email"
-                                                placeholder="Email Addresiniz" value="{{ old('email') }}" autofocus>
-                                            @error('email')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                            @if (session()->get('error'))
-                                                <div class="text-danger">{{ session()->get('error') }}</div>
-                                            @endif
-                                        </div>
+
+                                        <input type="hidden" name="token" value="{{ $token }}">
+                                        <input type="hidden" name="email" value="{{ $email }}">
+
                                         <div class="form-group">
                                             <input type="password"
                                                 class="form-control @error('password') is-invalid @enderror"
-                                                name="password" placeholder="Password">
+                                                name="password" placeholder="Password" autofocus>
                                             @error('password')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                                Giriş
-                                            </button>
+                                            <input type="password"
+                                                class="form-control @error('retype_password') is-invalid @enderror"
+                                                name="retype_password" placeholder="Retype Password">
+                                            @error('retype_password')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
-                                            <div>
-                                                <a href="{{ route('admin.forget_password') }}">
-                                                    Şifremi Unuttum ?
-                                                </a>
-                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                                Güncelle
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
@@ -77,7 +67,6 @@
     </div>
 
     @include('admin.layout.scripts_footer')
-
 
 </body>
 
